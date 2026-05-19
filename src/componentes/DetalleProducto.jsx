@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import MockupEquipo from './MockupEquipo';
+import SpecsClave from './SpecsClave';
 import { formatearMoneda, formatearUsd } from '../utilidades/formato';
 
 export default function DetalleProducto({
@@ -44,7 +45,11 @@ export default function DetalleProducto({
         }
       }}
     >
-      <article className="detalle-producto__ventana" itemScope itemType="https://schema.org/Product">
+      <article
+        className="detalle-producto__ventana"
+        itemScope
+        itemType="https://schema.org/Product"
+      >
         <button
           type="button"
           className="detalle-producto__cerrar"
@@ -74,87 +79,34 @@ export default function DetalleProducto({
               )}
             </figure>
 
-            <div className="detalle-producto__miniaturas">
-              <article className="detalle-producto__miniatura">
-                <span className="detalle-producto__mini-etiqueta">Vista general</span>
-                {producto.imagen ? (
-                  <img className="detalle-producto__imagen detalle-producto__imagen--mini" src={producto.imagen} alt="" />
-                ) : (
-                  <MockupEquipo
-                    titulo="Perfil exterior"
-                    subtitulo="Líneas de gabinete y flujo"
-                    acento={producto.acento}
-                    variante="detalle"
-                  />
-                )}
-              </article>
-              <article className="detalle-producto__miniatura">
-                <span className="detalle-producto__mini-etiqueta">Lectura rápida</span>
-                <MockupEquipo
-                  titulo="Arquitectura"
-                  subtitulo="Capas de rendimiento y expansión"
-                  acento={producto.acento}
-                  variante="detalle"
-                />
-              </article>
+            <div className="detalle-producto__resumen-visual">
+              <span className="detalle-producto__mini-etiqueta">{producto.disponibilidad}</span>
+              <span className="detalle-producto__mini-etiqueta">Retiro o envio nacional</span>
+              <span className="detalle-producto__mini-etiqueta">Compra o reserva</span>
             </div>
           </div>
 
           <div className="detalle-producto__contenido">
-            <span className={`etiqueta etiqueta--${producto.acento}`}>{producto.etiqueta}</span>
-            <h2 className="detalle-producto__titulo" id="detalle-producto-titulo" itemProp="name">
-              {producto.nombre}
-            </h2>
-            <p className="detalle-producto__subtitulo" itemProp="description">
-              {producto.subtitulo}
-            </p>
-            <p className="detalle-producto__descripcion">{producto.descripcion}</p>
-
-            <div className="detalle-producto__resumen-comercial">
-              <strong className="detalle-producto__precio">{formatearMoneda(producto.precioArs)}</strong>
-              <span className="detalle-producto__precio-nota">
-                contado transferencia · ref. {formatearUsd(producto.precioUsd)}
-              </span>
-              <span className="detalle-producto__disponibilidad">{producto.disponibilidad}</span>
-            </div>
-
-            <div className="detalle-producto__columnas">
-              <article className="detalle-producto__bloque">
-                <h3 className="detalle-producto__bloque-titulo">Especificaciones técnicas</h3>
-                <dl className="detalle-producto__specs">
-                  {producto.especificaciones.map(([clave, valor]) => (
-                    <div className="detalle-producto__spec" key={clave}>
-                      <dt>{clave}</dt>
-                      <dd>{valor}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </article>
-
-              <article className="detalle-producto__bloque">
-                <h3 className="detalle-producto__bloque-titulo">Ideal para</h3>
-                <ul className="detalle-producto__lista">
-                  {producto.idealPara.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </article>
-            </div>
-
-            <article className="detalle-producto__bloque">
-              <h3 className="detalle-producto__bloque-titulo">Destacados de rendimiento</h3>
-              <ul className="detalle-producto__destacados">
-                {producto.destacadosRendimiento.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-
-            <aside className="detalle-producto__compra">
-              <p className="detalle-producto__compra-texto">
-                Métodos disponibles: transferencia, efectivo, USD por transferencia y USDT. Envíos a todo el país o
-                retiro coordinado en Parque Chacabuco.
+            <div className="detalle-producto__cabecera">
+              <span className={`etiqueta etiqueta--${producto.acento}`}>{producto.etiqueta}</span>
+              <h2
+                className="detalle-producto__titulo"
+                id="detalle-producto-titulo"
+                itemProp="name"
+              >
+                {producto.nombre}
+              </h2>
+              <p className="detalle-producto__subtitulo" itemProp="description">
+                {producto.subtitulo}
               </p>
+              <div className="detalle-producto__resumen-comercial">
+                <strong className="detalle-producto__precio">
+                  {formatearMoneda(producto.precioArs)}
+                </strong>
+                <span className="detalle-producto__precio-nota">
+                  contado transferencia · ref. {formatearUsd(producto.precioUsd)}
+                </span>
+              </div>
               <div className="detalle-producto__acciones">
                 <button
                   type="button"
@@ -163,11 +115,58 @@ export default function DetalleProducto({
                 >
                   Comprar / reservar
                 </button>
-                <a className="boton boton--fantasma" href={mensaje} target="_blank" rel="noreferrer">
-                  Consultar por WhatsApp
+                <a
+                  className="boton boton--fantasma"
+                  href={mensaje}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Consultar
                 </a>
               </div>
-            </aside>
+            </div>
+
+            <p className="detalle-producto__descripcion">{producto.descripcion}</p>
+
+            <SpecsClave especificaciones={producto.especificaciones} limite={4} />
+
+            <div className="detalle-producto__desplegables">
+              <details className="detalle-producto__bloque" open>
+                <summary className="detalle-producto__bloque-titulo">Specs completas</summary>
+                <dl className="detalle-producto__specs">
+                  {producto.especificaciones.map(([clave, valor]) => (
+                    <div className="detalle-producto__spec" key={clave}>
+                      <dt>{clave}</dt>
+                      <dd>{valor}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </details>
+
+              <details className="detalle-producto__bloque">
+                <summary className="detalle-producto__bloque-titulo">
+                  Para que uso sirve
+                </summary>
+                <ul className="detalle-producto__lista">
+                  {producto.idealPara.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </details>
+
+              <details className="detalle-producto__bloque">
+                <summary className="detalle-producto__bloque-titulo">Pago y entrega</summary>
+                <p className="detalle-producto__compra-texto">
+                  Transferencia, efectivo, USD por transferencia o USDT. Envio a todo el
+                  pais o retiro coordinado en Parque Chacabuco.
+                </p>
+                <ul className="detalle-producto__destacados">
+                  {producto.destacadosRendimiento.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </details>
+            </div>
           </div>
         </div>
       </article>

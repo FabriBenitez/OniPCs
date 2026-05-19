@@ -1,49 +1,45 @@
 import { formatearMoneda } from '../utilidades/formato';
 
 const instruccionesPago = {
-  transferencia:
-    'Al confirmar el pedido se muestran alias y CBU para completar la transferencia. La reserva queda sujeta a acreditación.',
-  efectivo:
-    'Se coordina por WhatsApp el retiro o la entrega pactada. Ideal para operaciones directas en Parque Chacabuco.',
-  usd_transferencia:
-    'La confirmación se realiza acordando tipo de cambio y cuenta para transferencia en USD.',
-  usdt:
-    'Se comparte una wallet placeholder para el prototipo y luego puede reemplazarse por la wallet operativa del negocio.',
+  transferencia: 'Mostramos alias y CBU al confirmar el pedido.',
+  efectivo: 'Coordinamos el retiro o entrega por WhatsApp.',
+  usd_transferencia: 'Se valida con tipo de cambio y cuenta en USD.',
+  usdt: 'Se comparte la wallet al cerrar la reserva.',
 };
 
 const opcionesEntrega = [
   {
     valor: 'retiro',
     titulo: 'Retiro en local',
-    descripcion: 'Parque Chacabuco, CABA',
+    descripcion: 'Parque Chacabuco',
   },
   {
     valor: 'envio',
     titulo: 'Andreani',
-    descripcion: 'Envío a domicilio',
+    descripcion: 'Envio a domicilio',
   },
 ];
 
 const opcionesPago = [
   {
     valor: 'efectivo',
-    titulo: 'Efectivo en local',
-    descripcion: 'Ideal para retiro coordinado',
+    titulo: 'Efectivo',
+    descripcion: 'Pago directo',
   },
   {
     valor: 'transferencia',
     titulo: 'Transferencia bancaria',
-    descripcion: 'Alias y CBU al confirmar',
+    descripcion: 'Alias y CBU',
   },
   {
     valor: 'usd_transferencia',
-    titulo: 'Dólares por transferencia',
-    descripcion: 'Tipo de cambio acordado',
+    titulo: 'USD por transferencia',
+    descripcion: 'Cambio acordado',
   },
   {
     valor: 'usdt',
     titulo: 'USDT (wallet)',
-    descripcion: 'Operación directa en crypto',
+    descripcion: 'Operacion crypto',
   },
 ];
 
@@ -64,18 +60,24 @@ export default function Checkout({
     <section className="seccion checkout" id="checkout" aria-labelledby="checkout-titulo">
       <div className="contenedor">
         <header className="seccion__encabezado" data-revelar>
-          <p className="seccion__eyebrow">Checkout realista</p>
+          <p className="seccion__eyebrow">Checkout</p>
           <h2 className="seccion__titulo" id="checkout-titulo">
-            Compra o reserva simple, con instrucciones reales según pago y entrega.
+            Datos claros, entrega simple y confirmacion directa.
           </h2>
           <p className="seccion__descripcion">
-            El flujo no intenta parecer enterprise. Está pensado para vender bien, ordenar datos y cerrar una
-            coordinación creíble.
+            El flujo prioriza cerrar rapido: primero tus datos, despues entrega,
+            pago y resumen final.
           </p>
         </header>
 
         <div className="checkout__grilla">
           <form className="checkout__formulario" onSubmit={alEnviarFormulario} data-revelar>
+            <div className="checkout__pasos" aria-hidden="true">
+              <span className="checkout__paso">1. Datos</span>
+              <span className="checkout__paso">2. Entrega</span>
+              <span className="checkout__paso">3. Pago</span>
+            </div>
+
             <div className="checkout__grupo">
               <label className="checkout__etiqueta" htmlFor="nombre">
                 Nombre y apellido
@@ -87,7 +89,7 @@ export default function Checkout({
                 type="text"
                 value={formulario.nombre}
                 onChange={alCambiarCampo}
-                placeholder="Cómo querés que te contacten"
+                placeholder="Como quieres que te contacten"
                 required
               />
             </div>
@@ -111,7 +113,7 @@ export default function Checkout({
 
               <div className="checkout__grupo">
                 <label className="checkout__etiqueta" htmlFor="telefono">
-                  WhatsApp o teléfono
+                  WhatsApp o telefono
                 </label>
                 <input
                   className="checkout__control"
@@ -127,14 +129,16 @@ export default function Checkout({
             </div>
 
             <fieldset className="checkout__fieldset">
-              <legend className="checkout__legend">Método de entrega</legend>
+              <legend className="checkout__legend">Entrega</legend>
               <div className="checkout__opciones">
                 {opcionesEntrega.map((opcion) => {
                   const activa = formulario.tipoEntrega === opcion.valor;
 
                   return (
                     <label
-                      className={`checkout__opcion ${activa ? 'checkout__opcion--activa' : ''}`}
+                      className={`checkout__opcion ${
+                        activa ? 'checkout__opcion--activa' : ''
+                      }`}
                       key={opcion.valor}
                     >
                       <input
@@ -147,7 +151,9 @@ export default function Checkout({
                       />
                       <span className="checkout__opcion-contenido">
                         <strong className="checkout__opcion-titulo">{opcion.titulo}</strong>
-                        <span className="checkout__opcion-descripcion">{opcion.descripcion}</span>
+                        <span className="checkout__opcion-descripcion">
+                          {opcion.descripcion}
+                        </span>
                       </span>
                     </label>
                   );
@@ -157,8 +163,8 @@ export default function Checkout({
 
             <fieldset className="checkout__fieldset">
               <legend className="checkout__legend checkout__legend--con-etiqueta">
-                Método de pago
-                <span className="checkout__pill">No se aceptan tarjetas</span>
+                Pago
+                <span className="checkout__pill">Sin tarjetas</span>
               </legend>
               <div className="checkout__opciones checkout__opciones--pago">
                 {opcionesPago.map((opcion) => {
@@ -166,7 +172,9 @@ export default function Checkout({
 
                   return (
                     <label
-                      className={`checkout__opcion ${activa ? 'checkout__opcion--activa' : ''}`}
+                      className={`checkout__opcion ${
+                        activa ? 'checkout__opcion--activa' : ''
+                      }`}
                       key={opcion.valor}
                     >
                       <input
@@ -179,7 +187,9 @@ export default function Checkout({
                       />
                       <span className="checkout__opcion-contenido">
                         <strong className="checkout__opcion-titulo">{opcion.titulo}</strong>
-                        <span className="checkout__opcion-descripcion">{opcion.descripcion}</span>
+                        <span className="checkout__opcion-descripcion">
+                          {opcion.descripcion}
+                        </span>
                       </span>
                     </label>
                   );
@@ -190,7 +200,7 @@ export default function Checkout({
             <div className="checkout__dos-columnas">
               <div className="checkout__grupo">
                 <label className="checkout__etiqueta" htmlFor="codigoPostalCheckout">
-                  Código postal
+                  Codigo postal
                 </label>
                 <input
                   className="checkout__control"
@@ -224,7 +234,7 @@ export default function Checkout({
 
             <div className="checkout__grupo">
               <label className="checkout__etiqueta" htmlFor="direccion">
-                Dirección o referencia
+                Direccion o referencia
               </label>
               <input
                 className="checkout__control"
@@ -233,7 +243,7 @@ export default function Checkout({
                 type="text"
                 value={formulario.direccion}
                 onChange={alCambiarCampo}
-                placeholder="Calle, altura, piso o aclaración"
+                placeholder="Calle, altura, piso o aclaracion"
               />
             </div>
 
@@ -247,25 +257,25 @@ export default function Checkout({
                 name="observaciones"
                 value={formulario.observaciones}
                 onChange={alCambiarCampo}
-                placeholder="Ej: necesito factura, quiero reservar, prefiero coordinar horario..."
+                placeholder="Factura, reserva, horario o comentario extra"
               />
             </div>
 
             <article className="checkout__instrucciones">
-              <h3 className="checkout__subtitulo">Instrucciones según el pago</h3>
+              <h3 className="checkout__subtitulo">Siguiente paso</h3>
               <p className="checkout__texto">{instruccionesPago[formulario.metodoPago]}</p>
               {formulario.metodoPago === 'usdt' ? (
                 <code className="checkout__wallet">WALLET-USDT-ONI-PLACEHOLDER</code>
               ) : null}
               {formulario.tipoEntrega === 'envio' && estimacionEnvio ? (
                 <p className="checkout__texto">
-                  Envío estimado actual: {formatearMoneda(estimacionEnvio.costo)} · {estimacionEnvio.zona} ·{' '}
-                  {estimacionEnvio.tiempo}
+                  Envio estimado actual: {formatearMoneda(estimacionEnvio.costo)} ·{' '}
+                  {estimacionEnvio.zona} · {estimacionEnvio.tiempo}
                 </p>
               ) : null}
               {formulario.tipoEntrega === 'retiro' ? (
                 <p className="checkout__texto">
-                  Retiro coordinado en Parque Chacabuco, Buenos Aires, con seguimiento por WhatsApp.
+                  Retiro coordinado en Parque Chacabuco, Buenos Aires.
                 </p>
               ) : null}
             </article>
@@ -275,17 +285,17 @@ export default function Checkout({
               className="boton boton--primario boton--ancho"
               disabled={carritoVacio}
             >
-              Confirmar pedido
+              Reservar pedido
             </button>
           </form>
 
           <aside className="checkout__resumen" data-revelar>
-            <p className="checkout__resumen-kicker">Resumen persistente</p>
+            <p className="checkout__resumen-kicker">Resumen</p>
             <h3 className="checkout__resumen-titulo">Tu compra</h3>
 
             {carritoVacio ? (
               <p className="checkout__resumen-vacio">
-                El resumen se activa cuando agregás una PC al carrito desde el catálogo.
+                El resumen aparece cuando agregas una PC al carrito.
               </p>
             ) : (
               <>
@@ -308,7 +318,7 @@ export default function Checkout({
                     <strong>{formatearMoneda(subtotal)}</strong>
                   </div>
                   <div className="checkout__total-fila">
-                    <span>Envío</span>
+                    <span>Envio</span>
                     <strong>
                       {formulario.tipoEntrega === 'retiro'
                         ? 'Retiro coordinado'
@@ -328,13 +338,14 @@ export default function Checkout({
             {confirmacion ? (
               <div className="checkout__confirmacion" aria-live="polite">
                 <span className="checkout__confirmacion-etiqueta">Pedido generado</span>
-                <strong className="checkout__confirmacion-numero">{confirmacion.numeroPedido}</strong>
+                <strong className="checkout__confirmacion-numero">
+                  {confirmacion.numeroPedido}
+                </strong>
                 <p className="checkout__confirmacion-texto">{confirmacion.mensaje}</p>
               </div>
             ) : (
               <p className="checkout__resumen-texto">
-                Este bloque deja visible el resultado comercial del flujo: pedido claro, total estimado e
-                instrucciones concretas sin fricción innecesaria.
+                Veras subtotal, envio estimado y total antes de confirmar.
               </p>
             )}
           </aside>

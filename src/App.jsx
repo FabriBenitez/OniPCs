@@ -30,10 +30,18 @@ function desplazarA(id) {
   });
 }
 
+function normalizarTexto(valor) {
+  return valor
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
 function filtrarProductos(productos, filtros) {
   return productos.filter((producto) => {
     const coincideUso =
-      filtros.uso === 'Todos' || producto.uso.toLowerCase() === filtros.uso.toLowerCase();
+      filtros.uso === 'Todos' ||
+      normalizarTexto(producto.uso) === normalizarTexto(filtros.uso);
 
     const coincidePrecio =
       filtros.precio === 'Todos' ||
@@ -41,7 +49,7 @@ function filtrarProductos(productos, filtros) {
       (filtros.precio === '$1M a $2M' &&
         producto.precioArs > 1000000 &&
         producto.precioArs <= 2000000) ||
-      (filtros.precio === 'Más de $2M' && producto.precioArs > 2000000);
+      (normalizarTexto(filtros.precio) === 'mas de $2m' && producto.precioArs > 2000000);
 
     const coincideDisponibilidad =
       filtros.disponibilidad === 'Todas' ||
@@ -63,22 +71,22 @@ function obtenerEstimacionEnvio(codigoPostal) {
 
   const primerDigito = codigoPostal.trim()[0];
   const tabla = {
-    0: { zona: 'AMBA extendida', costo: 12000, tiempo: '24 a 72 hs hábiles' },
-    1: { zona: 'Buenos Aires interior', costo: 16800, tiempo: '2 a 4 días hábiles' },
-    2: { zona: 'Centro del país', costo: 18900, tiempo: '3 a 5 días hábiles' },
-    3: { zona: 'Centro ampliado', costo: 19800, tiempo: '3 a 5 días hábiles' },
-    4: { zona: 'Litoral y norte', costo: 21400, tiempo: '4 a 6 días hábiles' },
-    5: { zona: 'Cuyo', costo: 22900, tiempo: '4 a 6 días hábiles' },
-    6: { zona: 'Noroeste', costo: 24800, tiempo: '5 a 7 días hábiles' },
-    7: { zona: 'Patagonia norte', costo: 28900, tiempo: '5 a 8 días hábiles' },
-    8: { zona: 'Patagonia', costo: 31200, tiempo: '6 a 9 días hábiles' },
-    9: { zona: 'Sur austral', costo: 34500, tiempo: '6 a 10 días hábiles' },
+    0: { zona: 'AMBA extendida', costo: 12000, tiempo: '24 a 72 hs habiles' },
+    1: { zona: 'Buenos Aires interior', costo: 16800, tiempo: '2 a 4 dias habiles' },
+    2: { zona: 'Centro del pais', costo: 18900, tiempo: '3 a 5 dias habiles' },
+    3: { zona: 'Centro ampliado', costo: 19800, tiempo: '3 a 5 dias habiles' },
+    4: { zona: 'Litoral y norte', costo: 21400, tiempo: '4 a 6 dias habiles' },
+    5: { zona: 'Cuyo', costo: 22900, tiempo: '4 a 6 dias habiles' },
+    6: { zona: 'Noroeste', costo: 24800, tiempo: '5 a 7 dias habiles' },
+    7: { zona: 'Patagonia norte', costo: 28900, tiempo: '5 a 8 dias habiles' },
+    8: { zona: 'Patagonia', costo: 31200, tiempo: '6 a 9 dias habiles' },
+    9: { zona: 'Sur austral', costo: 34500, tiempo: '6 a 10 dias habiles' },
   };
 
   return tabla[primerDigito] ?? {
     zona: 'Cobertura nacional',
     costo: 22000,
-    tiempo: '3 a 6 días hábiles',
+    tiempo: '3 a 6 dias habiles',
   };
 }
 
@@ -88,7 +96,7 @@ function obtenerMensajeConfirmacion(formulario, estimacionEnvio) {
       'Te mostramos alias y CBU para cerrar la transferencia y confirmar la reserva.',
     efectivo: 'Coordinamos por WhatsApp el pago en efectivo y la entrega o retiro.',
     usd_transferencia:
-      'Te enviamos los datos para la transferencia en USD y validamos la operación con el cambio acordado.',
+      'Te enviamos los datos para la transferencia en USD y validamos la operacion con el cambio acordado.',
     usdt:
       'Te compartimos la wallet placeholder del prototipo para cerrar la reserva y luego reemplazarla por la operativa.',
   };
@@ -97,14 +105,17 @@ function obtenerMensajeConfirmacion(formulario, estimacionEnvio) {
     formulario.tipoEntrega === 'retiro'
       ? 'Retiro coordinado en Parque Chacabuco.'
       : estimacionEnvio
-        ? `Envío estimado: ${estimacionEnvio.zona}, ${estimacionEnvio.tiempo}.`
-        : 'Queda pendiente calcular el envío con el código postal final.';
+        ? `Envio estimado: ${estimacionEnvio.zona}, ${estimacionEnvio.tiempo}.`
+        : 'Queda pendiente calcular el envio con el codigo postal final.';
 
   return `${mensajesPago[formulario.metodoPago]} ${mensajeEntrega}`;
 }
 
 function calcularSubtotal(carrito) {
-  return carrito.reduce((acumulado, item) => acumulado + item.producto.precioArs * item.cantidad, 0);
+  return carrito.reduce(
+    (acumulado, item) => acumulado + item.producto.precioArs * item.cantidad,
+    0,
+  );
 }
 
 export default function App() {
@@ -161,7 +172,10 @@ export default function App() {
   const costoEnvio =
     formularioCheckout.tipoEntrega === 'envio' && estimacionEnvio ? estimacionEnvio.costo : 0;
   const total = subtotal + costoEnvio;
-  const cantidadCarrito = carrito.reduce((acumulado, item) => acumulado + item.cantidad, 0);
+  const cantidadCarrito = carrito.reduce(
+    (acumulado, item) => acumulado + item.cantidad,
+    0,
+  );
 
   function manejarFiltros(evento) {
     const { name, value, type, checked } = evento.target;
@@ -173,7 +187,9 @@ export default function App() {
 
   function agregarAlCarrito(producto) {
     setCarrito((estadoAnterior) => {
-      const productoExistente = estadoAnterior.find((item) => item.producto.id === producto.id);
+      const productoExistente = estadoAnterior.find(
+        (item) => item.producto.id === producto.id,
+      );
 
       if (productoExistente) {
         return estadoAnterior.map((item) =>

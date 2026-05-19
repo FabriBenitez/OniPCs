@@ -1,4 +1,5 @@
 import MockupEquipo from './MockupEquipo';
+import SpecsClave from './SpecsClave';
 import { formatearMoneda, formatearUsd } from '../utilidades/formato';
 
 function obtenerDisponibilidadSchema(disponibilidad) {
@@ -22,7 +23,12 @@ export default function TarjetaProducto({ producto, alVerDetalle, alAgregarAlCar
         <span className="tarjeta-producto__disponibilidad">{producto.disponibilidad}</span>
       </div>
 
-      <figure className="tarjeta-producto__visual">
+      <button
+        type="button"
+        className="tarjeta-producto__visual"
+        onClick={() => alVerDetalle(producto)}
+        aria-label={`Abrir detalle de ${producto.nombre}`}
+      >
         {producto.imagen ? (
           <img
             className="tarjeta-producto__imagen"
@@ -38,7 +44,7 @@ export default function TarjetaProducto({ producto, alVerDetalle, alAgregarAlCar
             variante={producto.visualPrincipal ? 'principal' : 'detalle'}
           />
         )}
-      </figure>
+      </button>
 
       <div className="tarjeta-producto__cuerpo">
         <meta itemProp="category" content={producto.uso} />
@@ -49,28 +55,37 @@ export default function TarjetaProducto({ producto, alVerDetalle, alAgregarAlCar
         <p className="tarjeta-producto__subtitulo" itemProp="description">
           {producto.subtitulo}
         </p>
-        <p className="tarjeta-producto__resumen">{producto.resumenTecnico}</p>
 
-        <ul className="tarjeta-producto__specs" aria-label={`Resumen técnico de ${producto.nombre}`}>
-          {producto.especificaciones.slice(0, 3).map(([clave, valor]) => (
-            <li className="tarjeta-producto__spec" key={clave}>
-              <span>{clave}</span>
-              <strong>{valor}</strong>
-            </li>
-          ))}
-        </ul>
+        <SpecsClave especificaciones={producto.especificaciones} limite={4} compacta />
+
+        <details className="tarjeta-producto__desplegable">
+          <summary className="tarjeta-producto__desplegable-trigger">
+            Ver resumen tecnico
+          </summary>
+          <p className="tarjeta-producto__resumen">{producto.resumenTecnico}</p>
+        </details>
       </div>
 
       <div className="tarjeta-producto__pie">
-        <div className="tarjeta-producto__precios" itemProp="offers" itemScope itemType="https://schema.org/Offer">
+        <div
+          className="tarjeta-producto__precios"
+          itemProp="offers"
+          itemScope
+          itemType="https://schema.org/Offer"
+        >
           <meta itemProp="priceCurrency" content="ARS" />
           <meta itemProp="price" content={String(producto.precioArs)} />
-          <link itemProp="availability" href={obtenerDisponibilidadSchema(producto.disponibilidad)} />
-          <strong className="tarjeta-producto__precio">{formatearMoneda(producto.precioArs)}</strong>
+          <link
+            itemProp="availability"
+            href={obtenerDisponibilidadSchema(producto.disponibilidad)}
+          />
+          <strong className="tarjeta-producto__precio">
+            {formatearMoneda(producto.precioArs)}
+          </strong>
           <span className="tarjeta-producto__nota">
             contado transferencia · ref. {formatearUsd(producto.precioUsd)}
           </span>
-          <span className="tarjeta-producto__contado">Más barato al contado</span>
+          <span className="tarjeta-producto__contado">Mas barato al contado</span>
         </div>
 
         <div className="tarjeta-producto__acciones">
@@ -86,7 +101,7 @@ export default function TarjetaProducto({ producto, alVerDetalle, alAgregarAlCar
             className="boton boton--primario"
             onClick={() => alAgregarAlCarrito(producto)}
           >
-            Comprar / reservar
+            Comprar
           </button>
         </div>
       </div>

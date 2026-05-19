@@ -31,7 +31,7 @@ export default function CarritoLateral({
         </button>
 
         <div className="carrito__encabezado">
-          <p className="carrito__eyebrow">Resumen rápido</p>
+          <p className="carrito__eyebrow">Resumen</p>
           <h2 className="carrito__titulo" id="carrito-titulo">
             Carrito
           </h2>
@@ -86,16 +86,20 @@ export default function CarritoLateral({
                 <strong>{formatearMoneda(subtotal)}</strong>
               </div>
               <p className="carrito__nota">
-                El costo de envío se define más abajo según código postal o retiro coordinado.
+                El envio se define en el checkout segun codigo postal o retiro.
               </p>
-              <button type="button" className="boton boton--primario boton--ancho" onClick={alIrCheckout}>
+              <button
+                type="button"
+                className="boton boton--primario boton--ancho"
+                onClick={alIrCheckout}
+              >
                 Continuar al checkout
               </button>
             </div>
           </>
         ) : (
           <p className="carrito__vacio">
-            Todavía no agregaste equipos. Elegí una PC del catálogo para activar el flujo de compra.
+            Aun no agregaste equipos. Elige una PC para empezar.
           </p>
         )}
       </aside>

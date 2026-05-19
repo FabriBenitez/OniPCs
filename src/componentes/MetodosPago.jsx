@@ -3,13 +3,12 @@ export default function MetodosPago({ metodos }) {
     <section className="seccion pagos" aria-labelledby="pagos-titulo">
       <div className="contenedor">
         <header className="seccion__encabezado" data-revelar>
-          <p className="seccion__eyebrow">Métodos de pago</p>
+          <p className="seccion__eyebrow">Pagos</p>
           <h2 className="seccion__titulo" id="pagos-titulo">
-            El checkout refleja cómo se cierra la venta en la práctica.
+            La forma de pago se entiende sin leer de mas.
           </h2>
           <p className="seccion__descripcion">
-            Sin tarjetas inventadas, sin cuotas simuladas y sin integraciones falsas. El sitio comunica con claridad
-            las opciones reales para comprar o reservar.
+            Transferencia, efectivo, USD y USDT. Sin cuotas falsas ni friccion innecesaria.
           </p>
         </header>
 

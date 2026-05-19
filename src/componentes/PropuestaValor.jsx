@@ -3,13 +3,12 @@ export default function PropuestaValor({ propuestas }) {
     <section className="seccion propuesta" aria-labelledby="propuesta-titulo">
       <div className="contenedor">
         <header className="seccion__encabezado" data-revelar>
-          <p className="seccion__eyebrow">Arquitectura comercial</p>
+          <p className="seccion__eyebrow">Por que Oni</p>
           <h2 className="seccion__titulo" id="propuesta-titulo">
-            El prototipo mezcla narrativa técnica, catálogo claro y cierre directo.
+            Todo empuja a decidir rapido y comprar mejor.
           </h2>
           <p className="seccion__descripcion">
-            La experiencia prioriza intención de compra, legibilidad y una identidad visual fuerte sin abandonar SEO,
-            semántica ni estructura mantenible.
+            Se reduce el ruido para que la marca, las PCs y el flujo de compra queden al frente.
           </p>
         </header>
 

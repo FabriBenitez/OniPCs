@@ -1,31 +1,55 @@
+const chipsHero = [
+  'Gaming, oficina y workstation',
+  'Pago directo sin tarjeta',
+  'Retiro o envio nacional',
+];
+
+const datosHero = [
+  {
+    titulo: 'Compra directa',
+    texto: 'Ves la PC, comparas rapido y reservas.',
+  },
+  {
+    titulo: 'Specs al frente',
+    texto: 'CPU, GPU, RAM y SSD visibles desde la tarjeta.',
+  },
+  {
+    titulo: 'Checkout real',
+    texto: 'Transferencia, efectivo, USD o USDT.',
+  },
+];
+
 export default function HeroPrincipal({ alIrCatalogo, alIrCheckout, imagenHero }) {
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-titulo" data-revelar>
       <div className="contenedor hero__contenedor">
         <div className="hero__contenido">
-          <p className="hero__kicker">High performance engineering</p>
+          <p className="hero__kicker">oni.pcworkshop</p>
           <h1 className="hero__titulo" id="hero-titulo">
-            PCs armadas listas para <span className="hero__titulo-acento">rendir de verdad.</span>
+            PCs armadas listas para
+            <span className="hero__titulo-acento"> comprar sin vueltas.</span>
           </h1>
           <p className="hero__descripcion">
-            Un prototipo comercial con tono técnico, catálogo claro y un checkout realista para vender
-            equipos armados, workstations y mantenimiento sin parecer una tienda genérica.
+            Catalogo claro, lectura tecnica corta y un flujo directo para pasar del
+            equipo al checkout en pocos toques.
           </p>
+
+          <ul className="hero__chips" aria-label="Puntos clave del servicio">
+            {chipsHero.map((chip) => (
+              <li className="hero__chip" key={chip}>
+                {chip}
+              </li>
+            ))}
+          </ul>
 
           <div className="hero__acciones">
             <button type="button" className="boton boton--primario" onClick={alIrCatalogo}>
-              Explorar catálogo
+              Ver PCs armadas
             </button>
             <button type="button" className="boton boton--fantasma" onClick={alIrCheckout}>
-              Revisar checkout
+              Ir al checkout
             </button>
           </div>
-
-          <ul className="hero__bandas" aria-label="Diferenciales principales">
-            <li className="hero__banda">PCs cerradas por uso real, no por piezas sueltas.</li>
-            <li className="hero__banda">Pagos directos: transferencia, efectivo, USD y USDT.</li>
-            <li className="hero__banda">Retiro en Parque Chacabuco y logística lista para todo el país.</li>
-          </ul>
         </div>
 
         <div className="hero__visual" aria-hidden="true">
@@ -33,19 +57,16 @@ export default function HeroPrincipal({ alIrCatalogo, alIrCheckout, imagenHero }
             <img className="hero__imagen" src={imagenHero} alt="" />
           </div>
 
-          <div className="hero__panel hero__panel--datos">
-            <article className="hero__dato">
-              <span className="hero__dato-numero">06</span>
-              <p className="hero__dato-texto">equipos base para gaming, oficina, streaming, diseño y edición.</p>
-            </article>
-            <article className="hero__dato">
-              <span className="hero__dato-numero">04</span>
-              <p className="hero__dato-texto">métodos de pago reales, sin pasarelas falsas ni cuotas inventadas.</p>
-            </article>
-            <article className="hero__dato">
-              <span className="hero__dato-numero">AR</span>
-              <p className="hero__dato-texto">cobertura nacional con retiro local y estructura SEO en español.</p>
-            </article>
+          <div className="hero__resumen">
+            {datosHero.map((dato) => (
+              <article className="hero__dato" key={dato.titulo}>
+                <span className="hero__dato-numero">//</span>
+                <div className="hero__dato-cuerpo">
+                  <strong className="hero__dato-titulo">{dato.titulo}</strong>
+                  <p className="hero__dato-texto">{dato.texto}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>

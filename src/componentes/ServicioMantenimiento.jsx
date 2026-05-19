@@ -1,15 +1,19 @@
 export default function ServicioMantenimiento({ servicios, enlaceWhatsApp }) {
   return (
-    <section className="seccion mantenimiento" id="mantenimiento" aria-labelledby="mantenimiento-titulo">
+    <section
+      className="seccion mantenimiento"
+      id="mantenimiento"
+      aria-labelledby="mantenimiento-titulo"
+    >
       <div className="contenedor mantenimiento__contenedor">
         <div className="mantenimiento__intro" data-revelar>
-          <p className="seccion__eyebrow">Maintenance protocol</p>
+          <p className="seccion__eyebrow">Mantenimiento</p>
           <h2 className="seccion__titulo" id="mantenimiento-titulo">
-            El servicio también se vende con presencia y no como un extra escondido.
+            El servicio tambien se entiende en segundos.
           </h2>
           <p className="seccion__descripcion">
-            Diagnóstico, limpieza, repaste y optimización aparecen como parte natural del negocio para reforzar marca,
-            soporte y postventa desde la misma landing.
+            Diagnostico, limpieza y optimizacion visibles dentro del mismo sitio,
+            sin mandar al usuario a otra parte.
           </p>
 
           <a className="boton boton--primario" href={enlaceWhatsApp} target="_blank" rel="noreferrer">
