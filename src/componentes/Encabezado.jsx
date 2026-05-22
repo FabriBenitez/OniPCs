@@ -109,19 +109,27 @@ export default function Encabezado({
   );
 
   return (
-    <header className="encabezado">
-      <div className="contenedor encabezado__barra">
+    <header className={`encabezado ${menuAbierto ? 'encabezado--menu-abierto' : ''}`}>
+      <div
+        className={`contenedor encabezado__barra ${
+          esPaginaSecundaria ? 'encabezado__barra--secundaria' : ''
+        }`}
+      >
         {marca}
 
-        <div className="encabezado__controles">
+        <div
+          className={`encabezado__controles ${
+            esPaginaSecundaria ? 'encabezado__controles--secundario' : ''
+          }`}
+        >
           {!estaEnAdmin ? (
             <button
               type="button"
-              className="boton boton--secundario"
+              className="boton boton--secundario encabezado__boton-carrito"
               onClick={alAbrirCarrito}
               aria-label={`Abrir carrito con ${cantidadCarrito} productos`}
             >
-              Carrito
+              <span className="encabezado__carrito-texto">Carrito</span>
               <span className="boton__contador">{cantidadCarrito}</span>
             </button>
           ) : null}
@@ -129,10 +137,10 @@ export default function Encabezado({
           {esPaginaSecundaria ? (
             <button
               type="button"
-              className="boton boton--primario"
+              className="boton boton--primario encabezado__boton-volver"
               onClick={alIrInicio}
             >
-              Seguir viendo PCs
+              {estaEnAdmin ? 'Ver catalogo' : 'Seguir viendo PCs'}
             </button>
           ) : (
             <button
@@ -144,9 +152,11 @@ export default function Encabezado({
               aria-controls="menu-principal"
               onClick={() => setMenuAbierto((estadoAnterior) => !estadoAnterior)}
             >
-              <span className="encabezado__menu-linea" aria-hidden="true" />
-              <span className="encabezado__menu-linea" aria-hidden="true" />
-              <span className="encabezado__menu-linea" aria-hidden="true" />
+              <span className="encabezado__menu-icono" aria-hidden="true">
+                <span className="encabezado__menu-linea" />
+                <span className="encabezado__menu-linea" />
+                <span className="encabezado__menu-linea" />
+              </span>
               <span className="encabezado__menu-texto">Menu</span>
             </button>
           )}
