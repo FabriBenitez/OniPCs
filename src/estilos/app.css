@@ -18,6 +18,10 @@
   z-index: 1;
 }
 
+.pagina__principal--checkout {
+  padding-bottom: 3rem;
+}
+
 .contenedor {
   width: var(--ancho-contenido);
   margin-inline: auto;
@@ -88,12 +92,10 @@
 }
 
 .seccion__descripcion,
-.propuesta__texto,
 .mantenimiento__texto,
 .pagos__texto,
 .andreani__placeholder,
 .andreani__nota,
-.confianza__texto,
 .faq__respuesta,
 .llamado__texto,
 .pie-pagina__texto,
@@ -227,6 +229,14 @@ summary:focus-visible {
   align-items: center;
   gap: 0.8rem;
   min-width: 0;
+}
+
+.encabezado__marca--boton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
 }
 
 .encabezado__sello,
@@ -382,14 +392,17 @@ summary:focus-visible {
 }
 
 .hero__panel,
-.propuesta__item,
 .tarjeta-producto,
 .catalogo__cta,
 .catalogo__vacio,
 .mantenimiento__tarjeta,
+.admin__panel,
+.admin__metrica,
+.admin__producto,
+.admin__pedido,
+.admin__vacio,
 .pagos__tarjeta,
 .andreani__panel,
-.confianza__item,
 .faq__item,
 .checkout__formulario,
 .checkout__resumen,
@@ -408,13 +421,16 @@ summary:focus-visible {
 }
 
 .hero__panel::before,
-.propuesta__item::before,
 .tarjeta-producto::before,
 .catalogo__cta::before,
 .mantenimiento__tarjeta::before,
+.admin__panel::before,
+.admin__metrica::before,
+.admin__producto::before,
+.admin__pedido::before,
+.admin__vacio::before,
 .pagos__tarjeta::before,
 .andreani__panel::before,
-.confianza__item::before,
 .faq__item::before,
 .checkout__formulario::before,
 .checkout__resumen::before,
@@ -459,8 +475,6 @@ summary:focus-visible {
 }
 
 .hero__dato-numero,
-.propuesta__indice,
-.confianza__icono,
 .catalogo__cta-icono {
   color: var(--color-acento);
   font-family: var(--tipografia-mono);
@@ -472,7 +486,6 @@ summary:focus-visible {
 }
 
 .hero__dato-titulo,
-.propuesta__titulo,
 .catalogo__cta-titulo,
 .mantenimiento__titulo,
 .pagos__titulo,
@@ -490,6 +503,49 @@ summary:focus-visible {
 
 .hero__dato-texto {
   margin-top: 0.2rem;
+  color: var(--color-texto-secundario);
+  line-height: 1.6;
+}
+
+.checkout-pagina {
+  padding: 2rem 0 0;
+}
+
+.admin-pagina {
+  padding-top: 2rem;
+}
+
+.checkout-pagina__barra {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+}
+
+.checkout-pagina__volver {
+  width: fit-content;
+  min-height: 3rem;
+  padding: 0.7rem 0.95rem;
+  border: 1px solid #7a8394;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-texto);
+  font-weight: 600;
+}
+
+.checkout-pagina__estado {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.checkout-pagina__paso {
+  color: var(--color-acento);
+  font-family: var(--tipografia-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.checkout-pagina__texto {
   color: var(--color-texto-secundario);
   line-height: 1.6;
 }
@@ -519,26 +575,22 @@ summary:focus-visible {
   font-size: 0.84rem;
 }
 
-.propuesta__grilla,
 .catalogo__lista,
 .mantenimiento__grilla,
 .pagos__grilla,
-.confianza__grilla,
 .faq__lista {
   display: grid;
   gap: 1rem;
 }
 
-.propuesta__item,
 .catalogo__cta,
 .catalogo__vacio,
 .mantenimiento__tarjeta,
 .pagos__tarjeta,
-.confianza__item {
+.mantenimiento__tarjeta {
   padding: 1.25rem;
 }
 
-.propuesta__titulo,
 .mantenimiento__titulo,
 .pagos__titulo,
 .catalogo__cta-titulo {
@@ -795,8 +847,8 @@ summary:focus-visible {
 }
 
 .mantenimiento__contenedor,
+.admin__contenedor,
 .andreani__contenedor,
-.confianza__contenedor,
 .checkout__grilla,
 .llamado__contenedor {
   display: grid;
@@ -804,11 +856,290 @@ summary:focus-visible {
 }
 
 .mantenimiento__intro,
+.admin__encabezado,
 .andreani__contenido,
-.confianza__principal,
 .llamado__contenido {
   display: grid;
   gap: 1rem;
+}
+
+.admin__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.admin__acciones--formulario {
+  padding-top: 0.35rem;
+}
+
+.admin__metricas,
+.admin__paneles,
+.admin__formulario,
+.admin__lista-productos,
+.admin__lista-pedidos,
+.admin__pedido-cuerpo,
+.admin__pedido-grid,
+.admin__pedido-lista,
+.admin__pedido-items,
+.admin__producto-specs,
+.admin__dos-columnas,
+.admin__tres-columnas {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin__metricas {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.admin__metrica,
+.admin__panel,
+.admin__producto,
+.admin__vacio {
+  padding: 1.2rem;
+}
+
+.admin__metrica {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.admin__metrica-etiqueta,
+.admin__panel-kicker,
+.admin__producto-etiqueta {
+  color: var(--color-acento);
+  font-family: var(--tipografia-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.admin__metrica-valor,
+.admin__panel-titulo,
+.admin__producto-nombre,
+.admin__pedido-numero,
+.admin__pedido-cliente,
+.admin__pedido-subtitulo {
+  font-family: var(--tipografia-display);
+  letter-spacing: -0.03em;
+}
+
+.admin__metrica-valor {
+  font-size: 1.2rem;
+}
+
+.admin__panel,
+.admin__pedido {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.admin__panel-encabezado {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin__panel-texto,
+.admin__producto-texto,
+.admin__pedido-observacion,
+.admin__pedido-mensaje,
+.admin__pedido-item p,
+.admin__vacio p {
+  color: var(--color-texto-secundario);
+  line-height: 1.65;
+}
+
+.admin__panel-titulo,
+.admin__titulo {
+  font-size: 1.25rem;
+}
+
+.admin__formulario {
+  align-content: start;
+}
+
+.admin__grupo {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.admin__etiqueta {
+  color: var(--color-texto-secundario);
+  font-size: 0.92rem;
+}
+
+.admin__control {
+  min-height: 3.2rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid #7a8394;
+  border-radius: 18px;
+  background: rgba(9, 9, 11, 0.66);
+  color: var(--color-texto);
+}
+
+.admin__control--area {
+  min-height: 8.5rem;
+  resize: vertical;
+}
+
+.admin__checks {
+  display: grid;
+  gap: 0.7rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin__check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--color-texto-secundario);
+}
+
+.admin__producto {
+  display: grid;
+  gap: 1rem;
+}
+
+.admin__producto-media {
+  overflow: hidden;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin__producto-imagen,
+.detalle-producto__miniatura-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin__producto-imagen {
+  aspect-ratio: 4 / 3;
+}
+
+.admin__producto-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 12rem;
+  color: var(--color-texto-secundario);
+}
+
+.admin__producto-cuerpo,
+.admin__producto-cabecera {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.admin__producto-precio,
+.admin__pedido-total {
+  font-family: var(--tipografia-display);
+  font-size: 1.2rem;
+}
+
+.admin__producto-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  color: var(--color-texto-secundario);
+  font-size: 0.9rem;
+}
+
+.admin__producto-specs {
+  gap: 0.7rem;
+}
+
+.admin__spec,
+.admin__pedido-item,
+.admin__pedido-lista li {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin__spec,
+.admin__pedido-item {
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin__spec span,
+.admin__pedido-lista span {
+  color: var(--color-texto-secundario);
+}
+
+.admin__producto-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin__pedido {
+  padding: 0;
+}
+
+.admin__pedido-resumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.2rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.admin__pedido-resumen::-webkit-details-marker {
+  display: none;
+}
+
+.admin__pedido-principal {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.admin__pedido-meta {
+  color: var(--color-texto-secundario);
+  font-size: 0.88rem;
+}
+
+.admin__pedido-cuerpo {
+  padding: 0 1.2rem 1.2rem;
+}
+
+.admin__pedido-bloque {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin__pedido-lista li {
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin__pedido-lista li:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.admin__pedido-item-precio {
+  display: grid;
+  gap: 0.2rem;
+  justify-items: end;
+}
+
+.admin__vacio {
+  display: grid;
+  gap: 0.7rem;
 }
 
 .mantenimiento__marca,
@@ -1188,6 +1519,28 @@ summary:focus-visible {
   object-fit: cover;
 }
 
+.detalle-producto__miniaturas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.6rem, 1fr));
+  gap: 0.75rem;
+}
+
+.detalle-producto__miniatura {
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.detalle-producto__miniatura--activa {
+  border-color: rgba(239, 79, 49, 0.6);
+}
+
+.detalle-producto__miniatura-imagen {
+  aspect-ratio: 1 / 1;
+}
+
 .detalle-producto__resumen-visual {
   display: flex;
   flex-wrap: wrap;
@@ -1228,26 +1581,31 @@ summary:focus-visible {
   color: var(--color-texto-secundario);
 }
 
-.confianza__grilla {
-  display: grid;
-  gap: 1rem;
-}
-
 @media (min-width: 720px) {
+  .checkout-pagina__barra {
+    grid-template-columns: auto 1fr;
+    justify-content: space-between;
+  }
+
   .hero__acciones,
   .llamado__acciones,
   .detalle-producto__acciones {
     flex-direction: row;
   }
 
-  .propuesta__grilla,
   .mantenimiento__grilla,
   .pagos__grilla,
-  .confianza__grilla,
   .faq__lista,
   .catalogo__lista,
   .checkout__dos-columnas,
   .checkout__opciones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin__metricas,
+  .admin__pedido-grid,
+  .admin__producto-acciones,
+  .admin__dos-columnas {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1260,10 +1618,14 @@ summary:focus-visible {
   .hero__contenedor,
   .mantenimiento__contenedor,
   .andreani__contenedor,
-  .confianza__contenedor,
   .checkout__grilla,
   .llamado__contenedor,
   .detalle-producto__principal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin__paneles,
+  .admin__tres-columnas {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1319,10 +1681,8 @@ summary:focus-visible {
     width: auto;
   }
 
-  .propuesta__grilla,
   .mantenimiento__grilla,
   .pagos__grilla,
-  .confianza__grilla,
   .faq__lista,
   .pie-pagina__contenedor {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1339,6 +1699,23 @@ summary:focus-visible {
   .checkout__grilla {
     grid-template-columns: 1.15fr 0.85fr;
     align-items: start;
+  }
+
+  .admin__paneles {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: start;
+  }
+
+  .admin__metricas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .admin__tres-columnas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .admin__lista-productos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .checkout__resumen {

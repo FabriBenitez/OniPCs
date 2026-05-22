@@ -23,19 +23,19 @@ export default function PiePagina({ enlaceWhatsApp }) {
           <p className="pie-pagina__texto">Parque Chacabuco, Buenos Aires.</p>
         </div>
 
-        <nav className="pie-pagina__columna" aria-label="Enlaces de navegación">
-          <h2 className="pie-pagina__titulo">Navegación</h2>
+        <nav className="pie-pagina__columna" aria-label="Enlaces de navegacion">
+          <h2 className="pie-pagina__titulo">Navegacion</h2>
           <a className="pie-pagina__link" href="#catalogo">
-            Catálogo
+            Catalogo
           </a>
           <a className="pie-pagina__link" href="#mantenimiento">
             Mantenimiento
           </a>
-          <a className="pie-pagina__link" href="#checkout">
-            Checkout
-          </a>
           <a className="pie-pagina__link" href="#preguntas">
             Preguntas frecuentes
+          </a>
+          <a className="pie-pagina__link" href="#envios">
+            Envios
           </a>
         </nav>
 
@@ -53,9 +53,9 @@ export default function PiePagina({ enlaceWhatsApp }) {
             WhatsApp
           </a>
           <a className="pie-pagina__link" href="#envios">
-            Envíos a todo el país
+            Envios a todo el pais
           </a>
-          <span className="pie-pagina__texto">Estructura lista para sumar redes y más canales.</span>
+          <span className="pie-pagina__texto">Estructura lista para sumar redes y mas canales.</span>
         </div>
       </div>
     </footer>

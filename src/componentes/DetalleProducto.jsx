@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MockupEquipo from './MockupEquipo';
 import SpecsClave from './SpecsClave';
 import { formatearMoneda, formatearUsd } from '../utilidades/formato';
@@ -9,6 +9,8 @@ export default function DetalleProducto({
   alAgregarAlCarrito,
   enlaceWhatsApp,
 }) {
+  const [indiceImagenActiva, setIndiceImagenActiva] = useState(0);
+
   useEffect(() => {
     if (!producto) {
       return undefined;
@@ -25,9 +27,20 @@ export default function DetalleProducto({
     return () => window.removeEventListener('keydown', manejarEscape);
   }, [producto, alCerrar]);
 
+  useEffect(() => {
+    setIndiceImagenActiva(0);
+  }, [producto]);
+
   if (!producto) {
     return null;
   }
+
+  const galeria = producto.galeria?.length
+    ? producto.galeria
+    : producto.imagen
+      ? [producto.imagen]
+      : [];
+  const imagenActiva = galeria[indiceImagenActiva] ?? producto.imagen;
 
   const mensaje = `${enlaceWhatsApp}?text=Hola%20oni.pcworkshop,%20quiero%20consultar%20por%20${encodeURIComponent(
     producto.nombre,
@@ -62,10 +75,10 @@ export default function DetalleProducto({
         <div className="detalle-producto__principal">
           <div className="detalle-producto__galeria">
             <figure className="detalle-producto__visual-principal">
-              {producto.imagen ? (
+              {imagenActiva ? (
                 <img
                   className="detalle-producto__imagen"
-                  src={producto.imagen}
+                  src={imagenActiva}
                   alt={producto.imagenAlt}
                   itemProp="image"
                 />
@@ -78,6 +91,30 @@ export default function DetalleProducto({
                 />
               )}
             </figure>
+
+            {galeria.length > 1 ? (
+              <div className="detalle-producto__miniaturas" aria-label="Galeria del producto">
+                {galeria.map((imagen, indice) => (
+                  <button
+                    type="button"
+                    className={`detalle-producto__miniatura ${
+                      indice === indiceImagenActiva
+                        ? 'detalle-producto__miniatura--activa'
+                        : ''
+                    }`}
+                    key={`${producto.id}-galeria-${indice}`}
+                    onClick={() => setIndiceImagenActiva(indice)}
+                    aria-label={`Ver imagen ${indice + 1} de ${producto.nombre}`}
+                  >
+                    <img
+                      className="detalle-producto__miniatura-imagen"
+                      src={imagen}
+                      alt=""
+                    />
+                  </button>
+                ))}
+              </div>
+            ) : null}
 
             <div className="detalle-producto__resumen-visual">
               <span className="detalle-producto__mini-etiqueta">{producto.disponibilidad}</span>

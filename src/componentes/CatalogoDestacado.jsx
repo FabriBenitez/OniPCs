@@ -17,10 +17,6 @@ export default function CatalogoDestacado({
           <h2 className="seccion__titulo" id="catalogo-titulo">
             Elegi por uso, mira las specs clave y reserva en minutos.
           </h2>
-          <p className="seccion__descripcion">
-            Menos texto, mas lectura visual. Cada tarjeta deja al frente imagen,
-            precio, disponibilidad y hardware clave.
-          </p>
         </header>
 
         <FiltrosCatalogo

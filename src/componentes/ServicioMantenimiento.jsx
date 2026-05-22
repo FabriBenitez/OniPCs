@@ -1,3 +1,10 @@
+const resumenesServicio = {
+  PROTOCOL_01: 'Temperatura y estado',
+  PROTOCOL_02: 'Polvo y airflow',
+  PROTOCOL_03: 'Pasta y contacto',
+  PROTOCOL_04: 'Drivers y arranque',
+};
+
 export default function ServicioMantenimiento({ servicios, enlaceWhatsApp }) {
   return (
     <section
@@ -9,12 +16,8 @@ export default function ServicioMantenimiento({ servicios, enlaceWhatsApp }) {
         <div className="mantenimiento__intro" data-revelar>
           <p className="seccion__eyebrow">Mantenimiento</p>
           <h2 className="seccion__titulo" id="mantenimiento-titulo">
-            El servicio tambien se entiende en segundos.
+            Mantenimiento sin vueltas.
           </h2>
-          <p className="seccion__descripcion">
-            Diagnostico, limpieza y optimizacion visibles dentro del mismo sitio,
-            sin mandar al usuario a otra parte.
-          </p>
 
           <a className="boton boton--primario" href={enlaceWhatsApp} target="_blank" rel="noreferrer">
             Coordinar mantenimiento
@@ -28,7 +31,9 @@ export default function ServicioMantenimiento({ servicios, enlaceWhatsApp }) {
                 {servicio.codigo}
               </span>
               <h3 className="mantenimiento__titulo">{servicio.titulo}</h3>
-              <p className="mantenimiento__texto">{servicio.descripcion}</p>
+              <p className="mantenimiento__texto">
+                {resumenesServicio[servicio.codigo] ?? servicio.titulo}
+              </p>
             </article>
           ))}
         </div>
